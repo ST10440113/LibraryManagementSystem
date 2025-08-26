@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Books List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>My Books</h2>
+    <a href="/Books/Add" class="btn btn-primary">+ Add New Book</a>
+</div>
+
+<!--Books Table-->
+<div class="card">
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    
+                    <th>Status</th>
+                    <th>Actions</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+
+                    <td>The Great Gatsby</td>
+                    <td>F. Scott Fitzgerald</td>
+                    <td>Fiction</td>
+                    <td><span class="badge bg-warning">Pending</span></td>
+                    <td><a href="/Books/Details/1" class="btn btn-sm btn-outline-primary">
+                        View Details</a> </td>
+                </tr>
+                <tr>
+
+                    <td>GooseBumps</td>
+                    <td>R.L. Stine</td>
+                    <td>Horror</td>
+                    <td><span class="badge bg-warning">Pending</span></td>
+                    <td>
+                        <a href="/Books/Details/2" class="btn btn-sm btn-outline-primary">
+                            View Details
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>The Shining</td>
+                    <td>Stephen King</td>
+                    <td>Horror</td>
+                    <td><span class="badge bg-warning">Declined</span></td>
+                    <td>
+                        <a href="/Books/Details/3" class="btn btn-sm btn-outline-primary">
+                            View Details
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+
+            </table>
+                
+    </div>
+</div>
