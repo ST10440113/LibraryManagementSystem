@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewData["Title"] = "Admin Page";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4"><!--aligns upon an access, spaces out evenly, center- horizontal positioning-->
+
+    <h2>Admin Dashboard</h2>
+   <div>
+       <span class="badge bg-warning">5 Pending</span>
+        <span class="badge bg-success">12 Approved</span>
+        <span class="badge bg-danger">2 Declined</span>
+   </div>
+</div>
+<!--Nav to filter table-->
+<ul class="nav nav-tabs">
+<li class="nav item">
+        <a class="nav-link active" href="#">All Books</a>   <!-- # is placeholder, so no crashing-->
+</li>
+    <li class="nav item">
+        <a class="nav-link active" href="#">Pending (5)</a>   
+    </li>
+    <li class="nav item">
+        <a class="nav-link active" href="#">Approved (12)</a>   
+    </li>
+    <li class="nav item">
+        <a class="nav-link active" href="#">Declined (2)</a>   
+    </li>
+</ul>
+
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Book Title</th>
+                    <th>Author</th>
+                    <th>Submitted by</th>
+                    <th>Category</th>
+                    <th>Submission date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+
+                    <td>The Great Gatsby</td>
+                    <td>F. Scott Fitzgerald</td>
+                    <td>Brooke Davis </td>
+                    <td>Fiction</td>
+                    <td>12/07/2025</td>
+                    <td><span class="badge bg-warning">Pending</span></td>
+                    <td>
+                        <a href="/Admin/Review/1" class="btn btn-sm btn-outline-primary">
+                            Review
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>GooseBumps</td>
+                    <td>R.L. Stine</td>
+                    <td>Samaira Dean</td>
+                    <td>Horror</td>
+                    <td>17/03/2025</td>
+                    <td><span class="badge bg-warning">Pending</span></td>
+                    <td>
+                        <a href="/Admin/Review/2" class="btn btn-sm btn-outline-primary">
+                            Review
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>The Shining</td>
+                    <td>Stephen King</td>
+                    <td>Riley Baker </td>
+                    <td>Horror</td>
+                    <td>10/01/1997</td>
+                    <td><span class="badge bg-warning">Declined</span></td>
+                    <td>
+                        <a href="/Admin/Review/3" class="btn btn-sm btn-outline-primary">
+                            View Details
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>

@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewData["Title"] = "Review Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<nav class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Admin">Admin Dashboard</a></li>
+        <li class="breadcrumb-item active">Book Review</li>
+
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <h4> GooseBumps: Haunted Halloween</h4>
+                <span class="badge bg-warning ">Pending Review</span>
+            </div>
+
+            
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-sm-3 "><strong>Author</strong></div>
+                    <div class="col-sm-9">R.L.Stine</div>
+                </div>
+            
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-3 "><strong>Category</strong></div>
+                        <div class="col-sm-9">Horror</div>
+                    </div>
+                </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-sm-3"><strong>ISBN</strong></div>
+                            <div class="col-sm-9">789-12345698765</div>
+                    </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-sm-3  "><strong>Description</strong></div>
+                                <div class="col-sm-9 ">A spine-chilling tale perfect for Halloween, where a group of kids face their fears in a haunted house filled with ghouls and ghosts.</div>
+                            </div>
+                        </div>
+
+                        <!--Admin review section-->
+                        <div class="my-4">
+                        <h5>Admin Review</h5>
+                        <div class="mb-3"> 
+                        <label class = "form-label">Review comments</label>
+                        <textarea class="form-control" rows="4" placeholder="Enter your review comments..."></textarea>
+                        </div>
+                        </div>
+                        <div class="d-grid gap-2 d-flex">
+                        <button type="button" class="btn btn-success">Approve Book</button>                       
+                    <button type="button" class="btn btn-danger">Decline Book</button>
+                   <a href="/Admin" class="btn btn-secondary">Back to Dashboard </a>
+                </div>
+
+                
+                    </div>
+                </div>
+            </div>
+
+
+    <div class="col-lg-4">
+        <div class="card-header">
+            <h5>Supporting Documents</h5>
+        </div>
+        <div class="card-body">
+            <div class="list-group list-group-flush">
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    Books Cover
+                    <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                </div>
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    Table of Contents
+                    <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                </div>
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    Sample Chapter
+                    <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                </div>
+           
+    </div>
+        </div>
+</div>
+ <!--Review History-->
+ <div class=" card mt-3">
+<div class="card-header">
+            Review History
+ </div>
+        <div class="card-body">
+  <small class="text-muted">No previous reviews for this book</small>
+    </div>
+    </div>
+</div>
+
+
