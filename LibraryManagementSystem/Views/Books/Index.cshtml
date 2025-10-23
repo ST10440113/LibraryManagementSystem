@@ -1,4 +1,4 @@
-﻿
+﻿@model List<LibraryManagementSystem.Models.Book>
 @{
     ViewBag.Title = "Books List";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,55 +12,59 @@
 <!--Books Table-->
 <div class="card">
     <div class="card-body">
+        @if(Model.Count == 0)
+        {
+            <div class="text-center py5">
+                <p class="text-muted">No books available. Please add new books.</p>
+                <a href="/Book/Add" class="btn btn-primary">Add your first Book</a>
+            </div>
+
+        }
+        else
+        {
+            
+        
+
+
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Title</th>
                     <th>Author</th>
-                    <th>Category</th>
-                    
+                    <th>Category</th>  
                     <th>Status</th>
                     <th>Actions</th>
                     
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-
-                    <td>The Great Gatsby</td>
-                    <td>F. Scott Fitzgerald</td>
-                    <td>Fiction</td>
-                    <td><span class="badge bg-warning">Pending</span></td>
-                    <td><a href="/Books/Details/1" class="btn btn-sm btn-outline-primary">
-                        View Details</a> </td>
-                </tr>
-                <tr>
-
-                    <td>GooseBumps</td>
-                    <td>R.L. Stine</td>
-                    <td>Horror</td>
-                    <td><span class="badge bg-warning">Pending</span></td>
+           <tbody>
+                @foreach(var book in Model)
+                {
+                  <tr>
+                    <td><strong>@book.Title</strong></td>
+                   <td><strong>@book.Author</strong></td>
+                    <td><strong>@book.Category</strong></td>
                     <td>
-                        <a href="/Books/Details/2" class="btn btn-sm btn-outline-primary">
-                            View Details
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-
-                    <td>The Shining</td>
-                    <td>Stephen King</td>
-                    <td>Horror</td>
-                    <td><span class="badge bg-warning">Declined</span></td>
-                    <td>
-                        <a href="/Books/Details/3" class="btn btn-sm btn-outline-primary">
-                            View Details
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
+                        @if(book.Status == LibraryManagementSystem.Models.BookStatus.Pending)
+                        {
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        }
+                         else if (book.Status == LibraryManagementSystem.Models.BookStatus.Declined)
+                        {
+                                    <span class="badge bg-danger text-dark">Declined</span>
+                         }
+                        else
+                         {
+                            <span class="badge bg-success text-dark">Approved</span>
+                         }
+                         </td>
+                         <td>
+                         <a href="/Books/Details/@book.Id" class="btn btn-sm btn-outline-primary">View Details</a>
+                         </td>
+                        </tr>      
+                 }
 
             </table>
-                
+        }     
     </div>
 </div>

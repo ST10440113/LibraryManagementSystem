@@ -1,102 +1,139 @@
-﻿
+﻿@model LibraryManagementSystem.Models.Book
+
 @{
-    ViewData["Title"] = "Review Page";
+    ViewBag.Title = "Review";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <nav class="mb-4">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item"><a href="/Admin">Admin Dashboard</a></li>
-        <li class="breadcrumb-item active">Book Review</li>
-
+        <li class="breadcrumb-item"><a href="/Books">My Books</a></li>
+        <li class="breadcrumb-item">Review</li>
     </ol>
 </nav>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger"> @TempData["Error"]</div>
+}
 
 <div class="row">
     <div class="col-lg-8">
         <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <h4> GooseBumps: Haunted Halloween</h4>
-                <span class="badge bg-warning ">Pending Review</span>
+            <div class="card-header d-flex">
+                <h4>@Model.Title</h4>
+                <div>
+                    @if (Model.Status == LibraryManagementSystem.Models.BookStatus.Pending)
+                    {
+                        <span class="badge bg-warning fs-6">⏳ Pending Review</span>
+                    }
+                    else if (Model.Status == LibraryManagementSystem.Models.BookStatus.Approved)
+                    {
+                        <span class="badge bg-success fs-6">Approved</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger fs-6"> Declined</span>
+                    }
+                </div>
             </div>
-
-            
             <div class="card-body">
                 <div class="row mb-3">
-                    <div class="col-sm-3 "><strong>Author</strong></div>
-                    <div class="col-sm-9">R.L.Stine</div>
+                    <div class="col-sm-3"><strong>Author</strong></div>
+                    <div class="col-sm-9">@Model.Author</div>
                 </div>
-            
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-sm-3 "><strong>Category</strong></div>
-                        <div class="col-sm-9">Horror</div>
-                    </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Category</strong></div>
+                    <div class="col-sm-9">@Model.Category</div>
                 </div>
-                    <div class="card-body">
-                        <div class="row mb-3">
-                            <div class="col-sm-3"><strong>ISBN</strong></div>
-                            <div class="col-sm-9">789-12345698765</div>
-                    </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row mb-3">
-                                <div class="col-sm-3  "><strong>Description</strong></div>
-                                <div class="col-sm-9 ">A spine-chilling tale perfect for Halloween, where a group of kids face their fears in a haunted house filled with ghouls and ghosts.</div>
-                            </div>
-                        </div>
-
-                        <!--Admin review section-->
-                        <div class="my-4">
-                        <h5>Admin Review</h5>
-                        <div class="mb-3"> 
-                        <label class = "form-label">Review comments</label>
-                        <textarea class="form-control" rows="4" placeholder="Enter your review comments..."></textarea>
-                        </div>
-                        </div>
-                        <div class="d-grid gap-2 d-flex">
-                        <button type="button" class="btn btn-success">Approve Book</button>                       
-                    <button type="button" class="btn btn-danger">Decline Book</button>
-                   <a href="/Admin" class="btn btn-secondary">Back to Dashboard </a>
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>ISBN</strong></div>
+                    <div class="col-sm-9">@Model.Category</div>
                 </div>
-
-                
-                    </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Description</strong></div>
+                    <div class="col-sm-9">@Model.Description</div>
                 </div>
             </div>
-
-
-    <div class="col-lg-4">
-        <div class="card-header">
-            <h5>Supporting Documents</h5>
         </div>
-        <div class="card-body">
-            <div class="list-group list-group-flush">
-                <div class="list-group-item d-flex justify-content-between align-items-center">
-                    Books Cover
-                    <a href="#" class="btn btn-sm btn-outline-primary">View</a>
-                </div>
-                <div class="list-group-item d-flex justify-content-between align-items-center">
-                    Table of Contents
-                    <a href="#" class="btn btn-sm btn-outline-primary">View</a>
-                </div>
-                <div class="list-group-item d-flex justify-content-between align-items-center">
-                    Sample Chapter
-                    <a href="#" class="btn btn-sm btn-outline-primary">View</a>
-                </div>
-           
     </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                 @if (Model.Status == LibraryManagementSystem.Models.BookStatus.Pending)
+                {
+                    <hr class="my-4">
+                    <h5>Submit Your Review</h5>
+                    
+                    <form asp-action="Approve" method="post" class="mb-3">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Approval Comments (Optional)</label>
+                            <textarea name="comments" class="form-control" rows="3" placeholder="Add any comments about why this book is approved..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success btn-lg">
+                            Approve Book
+                        </button>
+                    </form>
+                    
+                    <form asp-action="Decline" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Reason for Declining *</label>
+                            <textarea name="comments" class="form-control" rows="3" placeholder="Please provide detailed reasons for declining..." required></textarea>
+                            <small class="form-text text-muted">This will be visible to the librarian who submitted the book.</small>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-danger btn-lg">
+                            Decline Book
+                        </button>
+                        <a href="/Admin" class="btn btn-secondary btn-lg">Cancel</a>
+                    </form>
+                }
+                </div>    
+        </div>
+        <></>
         </div>
 </div>
- <!--Review History-->
- <div class=" card mt-3">
-<div class="card-header">
-            Review History
- </div>
-        <div class="card-body">
-  <small class="text-muted">No previous reviews for this book</small>
-    </div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5> Supporting Documents (@Model.Documents.Count)</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.Documents.Count == 0)
+                {
+                    <p class="text-muted">No documents uploaded.</p>
+                }
+                else
+                {
+                    <div class="list-group">
+                        @foreach (var doc in Model.Documents)
+                        {
+                            <div class="list-group-item">
+                                <strong>@doc.FileName</strong>
+                                <span class="badge bg-success">🔒 Encrypted</span>
+                                <br>
+                                <small>@(doc.FileSize / 1024) KB</small>
+                                <br>
+                                <a href="/Books/DownloadDocument?bookId=@Model.Id&docId=@doc.Id" 
+                                   class="btn btn-sm btn-primary mt-2">
+                                    Download & Decrypt
+                                </a>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 </div>
 

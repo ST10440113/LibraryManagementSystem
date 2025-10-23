@@ -1,95 +1,87 @@
-﻿
+﻿@model List<LibraryManagementSystem.Models.Book>
+
 @{
     ViewData["Title"] = "Admin Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-4"><!--aligns upon an access, spaces out evenly, center- horizontal positioning-->
-
-    <h2>Admin Dashboard</h2>
-   <div>
-       <span class="badge bg-warning">5 Pending</span>
-        <span class="badge bg-success">12 Approved</span>
-        <span class="badge bg-danger">2 Declined</span>
-   </div>
-</div>
-<!--Nav to filter table-->
-<ul class="nav nav-tabs">
-<li class="nav item">
-        <a class="nav-link active" href="#">All Books</a>   <!-- # is placeholder, so no crashing-->
-</li>
-    <li class="nav item">
-        <a class="nav-link active" href="#">Pending (5)</a>   
+<!-- Navigation Tabs -->
+<ul class="nav nav-bar mb-4">
+    <li class="nav-item">
+        <a class="nav-link @(ViewBag.Filter == "all" ? "active" : "")" href="/Admin?filter=all">
+            All Books (@Model.Count)
+        </a>
     </li>
-    <li class="nav item">
-        <a class="nav-link active" href="#">Approved (12)</a>   
+    <li class="nav-item">
+        <a class="nav-link @(ViewBag.Filter == "pending" ? "active" : "")" href="/Admin?filter=pending">
+            Pending (@ViewBag.PendingCount)
+        </a>
     </li>
-    <li class="nav item">
-        <a class="nav-link active" href="#">Declined (2)</a>   
+    <li class="nav-item">
+        <a class="nav-link @(ViewBag.Filter == "declined" ? "active" : "")" href="/Admin?filter=declined">
+            Declined (@ViewBag.DeclinedCount)
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @(ViewBag.Filter == "approved" ? "active" : "")" href="/Admin?filter=approved">
+            Accepted (@ViewBag.ApprovedCount)
+        </a>
     </li>
 </ul>
 
-
+<!-- Table of Books -->
 <div class="card">
     <div class="card-body">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Book Title</th>
-                    <th>Author</th>
-                    <th>Submitted by</th>
-                    <th>Category</th>
-                    <th>Submission date</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-
-                    <td>The Great Gatsby</td>
-                    <td>F. Scott Fitzgerald</td>
-                    <td>Brooke Davis </td>
-                    <td>Fiction</td>
-                    <td>12/07/2025</td>
-                    <td><span class="badge bg-warning">Pending</span></td>
-                    <td>
-                        <a href="/Admin/Review/1" class="btn btn-sm btn-outline-primary">
-                            Review
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-
-                    <td>GooseBumps</td>
-                    <td>R.L. Stine</td>
-                    <td>Samaira Dean</td>
-                    <td>Horror</td>
-                    <td>17/03/2025</td>
-                    <td><span class="badge bg-warning">Pending</span></td>
-                    <td>
-                        <a href="/Admin/Review/2" class="btn btn-sm btn-outline-primary">
-                            Review
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-
-                    <td>The Shining</td>
-                    <td>Stephen King</td>
-                    <td>Riley Baker </td>
-                    <td>Horror</td>
-                    <td>10/01/1997</td>
-                    <td><span class="badge bg-warning">Declined</span></td>
-                    <td>
-                        <a href="/Admin/Review/3" class="btn btn-sm btn-outline-primary">
-                            View Details
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-
-        </table>
-
+        @if (Model == null || Model.Count < 0)
+        {
+            <div class="text-muted">No books available.</div>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Book Title</th>
+                        <th>Author</th>
+                        <th>Submitted by</th>
+                        <th>Category</th>
+                        <th>Submission Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var book in Model)
+                    {
+                        <tr>
+                            <td>@book.Title</td>
+                            <td>@book.Author</td>
+                            <td>@book.SubmittedBy</td>
+                            <td>@book.Category</td>
+                            <td>@book.SubmittedDate.ToShortDateString()</td>
+                            <td>
+                                @if (book.Status == LibraryManagementSystem.Models.BookStatus.Pending)
+                                {
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                }
+                                else if (book.Status == LibraryManagementSystem.Models.BookStatus.Approved)
+                                {
+                                    <span class="badge bg-success">Approved</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Declined</span>
+                                }
+                            </td>
+                            <td>
+                                <a href="/Admin/Review/@book.Id" class="btn btn-primary">
+                                    @(book.Status == LibraryManagementSystem.Models.BookStatus.Pending ? "Review" : "View")
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
     </div>
 </div>

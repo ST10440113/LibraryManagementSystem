@@ -1,4 +1,4 @@
-﻿
+﻿@model LibraryManagementSystem.Models.Book
 @{
     ViewBag.Title = "Books List";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,38 +10,52 @@
 <div class="card-header">
  <h3 class="card-title">New Book</h3>
 </div>
-<div class="mb-3">
-    <form>
-  <div class="mb-3">
-  <label class="form-label">Book Title</label>
-                <input type="text" class="form-control" placeholder="Enter book title">
+<div class="card-body">
+    <form asp-action="Add" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label">Book Title</label>
+                        <input asp-for="Title" type="text" class="form-control" placeholder="Enter book title">
 
-</div>
-            <div class="mb-3">
-                <label class="form-label">Book Author</label>
-                <input type="text" class="form-control" placeholder="Enter book author">
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Author" class="form-label">Book Author</label>
+                        <input asp-for="Author" type="text" class="form-control" placeholder="Enter book author">
 
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Category</label>
-                <select class="form-select">
-                    <option >Select category</option>
-                    <option>Fiction</option>
-                    <option>Science</option>
-                    <option>Fantasy</option>
-                    <option>Mystery</option>
-                    <option>Horror</option>
-                </select>
-            </div>
-            <div class="mb-3">
-             <label class="form-label">Desciption</label>
-             <textarea class="form-control" rows="4" placeholder="Enter book description"></textarea>
-             </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end"> <a href="/Books" class="btn btn-secondary me-md-2">Cancel</a>
-                <button type="submit" class="btn btn-primary">Add Book</button>
-                </div>
-           
-            </form>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Category" class="form-label">Category</label>
+                        <select asp-for="Category" class="form-select">
+                            <option>Select category</option>
+                            <option>Fiction</option>
+                            <option>Science</option>
+                            <option>Fantasy</option>
+                            <option>Mystery</option>
+                            <option>Horror</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label">Desciption</label>
+                        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter book description"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ISBN" class="form-label">ISBN</label>
+                        <textarea asp-for="ISBN" class="form-control" rows="4" placeholder="Enter ISBN"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label name="document" class="form-label">Supporting Documents</label>
+                        <input type="file" name="documents" class="form-control" accept=".pdf,.txt,.docx,.xlsx">
+                        <small class="form-text text-muted">Upload book cover, table pdf contents etc</small>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="/Books" class="btn btn-secondary me-md-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Add Book</button>
+                    </div>
+
+                </form>    
+    @Html.AntiForgeryToken()
+
 </div>
     </div>
    </div>
